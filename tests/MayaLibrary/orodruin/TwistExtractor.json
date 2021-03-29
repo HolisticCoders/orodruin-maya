@@ -1,0 +1,17 @@
+{
+    "definitions": {},
+    "components": [],
+    "ports": [
+        {
+            "name": "matrix",
+            "direction": "input",
+            "type": "matrix"
+        },
+        {
+            "name": "twist",
+            "direction": "output",
+            "type": "float"
+        }
+    ],
+    "connections": []
+}

@@ -1,0 +1,3 @@
+import orodruinmaya
+
+orodruinmaya.initialize()

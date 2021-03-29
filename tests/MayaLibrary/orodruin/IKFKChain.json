@@ -1,0 +1,511 @@
+{
+    "definitions": {},
+    "components": [
+        {
+            "type": "MayaLibrary::ChainBlender",
+            "name": "ChainBlender",
+            "ports": {
+                "blender": 0.0,
+                "chain_a_01": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "chain_a_02": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "chain_a_03": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "chain_b_01": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "chain_b_02": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "chain_b_03": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "output1": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "output2": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "output3": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ]
+            }
+        },
+        {
+            "type": "MayaLibrary::FKChain",
+            "name": "FKChain",
+            "ports": {
+                "input1": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "input2": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "input3": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "output1": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "output2": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "output3": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ]
+            }
+        },
+        {
+            "type": "MayaLibrary::IKChain",
+            "name": "IKChain",
+            "ports": {
+                "base": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "end": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "pole_vector": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "output1": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "output2": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "output3": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ]
+            }
+        }
+    ],
+    "ports": [
+        {
+            "name": "ik_base",
+            "direction": "input",
+            "type": "matrix"
+        },
+        {
+            "name": "ik_end",
+            "direction": "input",
+            "type": "matrix"
+        },
+        {
+            "name": "ik_pole_vector",
+            "direction": "input",
+            "type": "matrix"
+        },
+        {
+            "name": "fk1",
+            "direction": "input",
+            "type": "matrix"
+        },
+        {
+            "name": "output1",
+            "direction": "output",
+            "type": "matrix"
+        },
+        {
+            "name": "fk2",
+            "direction": "input",
+            "type": "matrix"
+        },
+        {
+            "name": "output2",
+            "direction": "output",
+            "type": "matrix"
+        },
+        {
+            "name": "fk3",
+            "direction": "input",
+            "type": "matrix"
+        },
+        {
+            "name": "output3",
+            "direction": "output",
+            "type": "matrix"
+        }
+    ],
+    "connections": [
+        [
+            "FKChain.output1",
+            "ChainBlender.chain_a_01"
+        ],
+        [
+            "FKChain.output2",
+            "ChainBlender.chain_a_02"
+        ],
+        [
+            "FKChain.output3",
+            "ChainBlender.chain_a_03"
+        ],
+        [
+            "IKChain.output1",
+            "ChainBlender.chain_b_01"
+        ],
+        [
+            "IKChain.output2",
+            "ChainBlender.chain_b_02"
+        ],
+        [
+            "IKChain.output3",
+            "ChainBlender.chain_b_03"
+        ],
+        [
+            "ChainBlender.output1",
+            ".output1"
+        ],
+        [
+            "ChainBlender.output2",
+            ".output2"
+        ],
+        [
+            "ChainBlender.output3",
+            ".output3"
+        ],
+        [
+            ".fk1",
+            "FKChain.input1"
+        ],
+        [
+            ".fk2",
+            "FKChain.input2"
+        ],
+        [
+            ".fk3",
+            "FKChain.input3"
+        ],
+        [
+            ".ik_base",
+            "IKChain.base"
+        ],
+        [
+            ".ik_end",
+            "IKChain.end"
+        ],
+        [
+            ".ik_pole_vector",
+            "IKChain.pole_vector"
+        ]
+    ]
+}

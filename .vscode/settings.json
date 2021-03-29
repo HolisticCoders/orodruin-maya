@@ -1,0 +1,21 @@
+{
+    "python.analysis.extraPaths": [
+        "vendor/orodruin",
+        "scripts"
+    ],
+    "python.autoComplete.extraPaths": [
+        "vendor/orodruin",
+        "scripts"
+    ],
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "black",
+    "python.languageServer": "Pylance",
+    "python.linting.enabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.mypyArgs": [
+        "--config-file=${workspaceFolder}/.mypy.ini"
+    ],
+    "python.pythonPath": ".venv\\Scripts\\python.exe",
+}

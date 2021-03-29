@@ -1,0 +1,22 @@
+{
+    "definitions": {},
+    "components": [],
+    "ports": [
+        {
+            "name": "matrix",
+            "direction": "input",
+            "type": "matrix"
+        },
+        {
+            "name": "offsetParentMatrix",
+            "direction": "input",
+            "type": "matrix"
+        },
+        {
+            "name": "worldMatrix",
+            "direction": "output",
+            "type": "matrix"
+        }
+    ],
+    "connections": []
+}
