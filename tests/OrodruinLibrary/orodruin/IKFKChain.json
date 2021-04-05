@@ -2,7 +2,7 @@
     "definitions": {},
     "components": [
         {
-            "type": "MayaLibrary::ChainBlender",
+            "type": "OrodruinLibrary::ChainBlender",
             "name": "ChainBlender",
             "ports": {
                 "blender": 0.0,
@@ -171,7 +171,7 @@
             }
         },
         {
-            "type": "MayaLibrary::FKChain",
+            "type": "OrodruinLibrary::FKChain",
             "name": "FKChain",
             "ports": {
                 "input1": [
@@ -285,7 +285,7 @@
             }
         },
         {
-            "type": "MayaLibrary::IKChain",
+            "type": "OrodruinLibrary::IKChain",
             "name": "IKChain",
             "ports": {
                 "base": [

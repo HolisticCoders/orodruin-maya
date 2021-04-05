@@ -3,6 +3,11 @@
     "components": [],
     "ports": [
         {
+            "name": "dag_parent",
+            "direction": "input",
+            "type": "reference"
+        },
+        {
             "name": "matrix",
             "direction": "input",
             "type": "matrix"

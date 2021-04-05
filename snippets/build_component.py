@@ -12,7 +12,7 @@ import maya.cmds as cmds
 
 cmds.file(new=True, force=True)
 
-library_path = Path(R"D:\projects\holistic-coders\orodruin-maya\tests\MayaLibrary")
+library_path = Path(R"D:\projects\holistic-coders\orodruin-maya\tests\OrodruinLibrary")
 MayaLibraryManager.register_library(library_path)
 
 def create_ik_fk():
@@ -21,6 +21,7 @@ def create_ik_fk():
     ik_fk.add_port("ik_base", Port.Direction.input, Port.Type.matrix)
     ik_fk.add_port("ik_end", Port.Direction.input, Port.Type.matrix)
     ik_fk.add_port("ik_pole_vector", Port.Direction.input, Port.Type.matrix)
+    ik_fk.add_port("blender", Port.Direction.input, Port.Type.float)
     for i in range(3):
         ik_fk.add_port(f"fk{i+1}", Port.Direction.input, Port.Type.matrix)
         ik_fk.add_port(f"output{i+1}", Port.Direction.output, Port.Type.matrix)
@@ -44,6 +45,7 @@ def create_ik_fk():
     ik_fk.ik_base.connect(ik_chain.base)
     ik_fk.ik_end.connect(ik_chain.end)
     ik_fk.ik_pole_vector.connect(ik_chain.pole_vector)
+    ik_fk.blender.connect(chain_blender.blender)
 
     fk_chain.output1.connect(chain_blender.chain_a_01)
     fk_chain.output2.connect(chain_blender.chain_a_02)
@@ -65,9 +67,11 @@ def create_controls(ik_fk):
 
     fk_02 = MayaLibraryManager.get_component("Control")
     fk_02.set_name("fk_02_ctl")
+    fk_02.dag_parent.set(fk_01)
 
     fk_03 = MayaLibraryManager.get_component("Control")
     fk_03.set_name("fk_03_ctl")
+    fk_03.dag_parent.set(fk_02)
 
     ik_base = MayaLibraryManager.get_component("Control")
     ik_base.set_name("ik_01_ctl")
@@ -104,9 +108,11 @@ def create_joints(ik_fk):
 
     joint_02 = MayaLibraryManager.get_component("Joint")
     joint_02.set_name("joint_02")
+    joint_02.dag_parent.set(joint_01)
 
     joint_03 = MayaLibraryManager.get_component("Joint")
     joint_03.set_name("joint_03")
+    joint_03.dag_parent.set(joint_02)
     
     ik_fk.output1.connect(joint_01.offsetParentMatrix)
     ik_fk.output2.connect(joint_02.offsetParentMatrix)
@@ -118,12 +124,12 @@ def create_joints(ik_fk):
         joint_03,
     ]
 
-# ik_fk = create_ik_fk()
 
+ik_fk = create_ik_fk()
 # with Path(R"D:\projects\holistic-coders\orodruin-maya\tests\MayaLibrary\orodruin\IKFKChain.json").open("w") as f:
 #     f.write(orodruin.serialization.component_as_json(ik_fk))
 
-ik_fk = MayaLibraryManager.get_component("IKFKChain")
+# ik_fk = MayaLibraryManager.get_component("IKFKChain")
 controls = create_controls(ik_fk)
 joints  = create_joints(ik_fk)
 
@@ -133,7 +139,8 @@ for component in components:
     component.set_parent(arm)
 
 
+# arm = MayaLibraryManager.get_component("Arm")
 ComponentBuilder.build_component(arm)
 
-with Path(R"D:\projects\holistic-coders\orodruin-maya\tests\MayaLibrary\orodruin\Arm.json").open("w") as f:
-    f.write(orodruin.serialization.component_as_json(arm))
+# with Path(R"D:\projects\holistic-coders\orodruin-maya\tests\OrodruinLibrary\orodruin\Arm.json").open("w") as f:
+#     f.write(orodruin.serialization.component_as_json(arm))

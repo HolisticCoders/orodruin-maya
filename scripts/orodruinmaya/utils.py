@@ -20,7 +20,6 @@ def reload_orodruin():
                 break
 
     for module in target_modules:
-        logger.info(f"Reloading {module}")
         del sys.modules[module]
 
     logger.info("Finished reloading orodruin.")

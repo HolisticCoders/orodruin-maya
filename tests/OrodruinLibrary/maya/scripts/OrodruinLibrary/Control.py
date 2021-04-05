@@ -1,14 +1,10 @@
 import importlib
-from importlib import reload
-
 import maya.cmds as cmds
-import Transform
-
-reload(Transform)
 from orodruin.component import Component
+from orodruinmaya.dag_rig import DAGRig
 
 
-class Control(Transform.Transform):
+class Control(DAGRig):
     @classmethod
     def new(cls, component: Component) -> "Control":
         node = super().new(component)

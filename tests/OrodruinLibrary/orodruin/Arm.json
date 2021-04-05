@@ -2,7 +2,7 @@
     "definitions": {},
     "components": [
         {
-            "type": "MayaLibrary::IKFKChain",
+            "type": "OrodruinLibrary::IKFKChain",
             "name": "IKFKChain",
             "ports": {
                 "ik_base": [
@@ -170,7 +170,7 @@
             }
         },
         {
-            "type": "MayaLibrary::Control",
+            "type": "OrodruinLibrary::Control",
             "name": "fk_01_ctl",
             "ports": {
                 "matrix": [
@@ -230,7 +230,7 @@
             }
         },
         {
-            "type": "MayaLibrary::Control",
+            "type": "OrodruinLibrary::Control",
             "name": "fk_02_ctl",
             "ports": {
                 "matrix": [
@@ -290,7 +290,7 @@
             }
         },
         {
-            "type": "MayaLibrary::Control",
+            "type": "OrodruinLibrary::Control",
             "name": "fk_03_ctl",
             "ports": {
                 "matrix": [
@@ -350,7 +350,7 @@
             }
         },
         {
-            "type": "MayaLibrary::Control",
+            "type": "OrodruinLibrary::Control",
             "name": "ik_01_ctl",
             "ports": {
                 "matrix": [
@@ -410,7 +410,7 @@
             }
         },
         {
-            "type": "MayaLibrary::Control",
+            "type": "OrodruinLibrary::Control",
             "name": "ik_end_ctl",
             "ports": {
                 "matrix": [
@@ -470,7 +470,7 @@
             }
         },
         {
-            "type": "MayaLibrary::Control",
+            "type": "OrodruinLibrary::Control",
             "name": "ik_pv_ctl",
             "ports": {
                 "matrix": [
@@ -530,7 +530,7 @@
             }
         },
         {
-            "type": "MayaLibrary::Joint",
+            "type": "OrodruinLibrary::Joint",
             "name": "joint_01",
             "ports": {
                 "matrix": [
@@ -590,7 +590,7 @@
             }
         },
         {
-            "type": "MayaLibrary::Joint",
+            "type": "OrodruinLibrary::Joint",
             "name": "joint_02",
             "ports": {
                 "matrix": [
@@ -650,7 +650,7 @@
             }
         },
         {
-            "type": "MayaLibrary::Joint",
+            "type": "OrodruinLibrary::Joint",
             "name": "joint_03",
             "ports": {
                 "matrix": [

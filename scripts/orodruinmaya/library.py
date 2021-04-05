@@ -1,6 +1,5 @@
 import os
-import site
-import sys
+import maya.cmds as cmds
 
 from orodruin.library import LibraryManager
 
@@ -17,6 +16,7 @@ class MayaLibraryManager(LibraryManager):
         except NotADirectoryError as e:
             raise NotADirectoryError(e)
         else:
-            maya_lib_path = str(path / "maya")
-            if maya_lib_path not in sys.path:
-                site.addsitedir(maya_lib_path)
+            pass
+            # library_name = path.name
+            # maya_module = path / "maya" / "modules" / f"{library_name}.mod"
+            # cmds.loadModule(load=str(maya_module))
