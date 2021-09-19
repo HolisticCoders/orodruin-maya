@@ -3,7 +3,7 @@ from typing import Dict
 from uuid import UUID
 
 from maya import cmds
-from orodruin.core import Component, Graph, Port, PortDirection
+from orodruin.core import Component, Port, PortDirection
 from orodruin_maya.graph import OMGraph
 from orodruin_maya.port import OMPort
 
@@ -88,3 +88,13 @@ class OMComponent:
 
     def unregister_port(self, port: Port) -> None:
         """Register a port to the OMGraph."""
+        if port.direction() is PortDirection.input:
+            node = self._input_node
+        else:
+            node = self._output_node
+
+        attribute = f"{node}.{port.name()}"
+
+        cmds.deleteAttr(attribute)
+
+        del self._ports[port.uuid()]
