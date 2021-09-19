@@ -14,8 +14,6 @@ class OMComponent:
 
     _component: Component
 
-    _maya_node_type: str = field(init=False, default="network")
-
     _graph: OMGraph = field(init=False)
     _ports: Dict[UUID, OMPort] = field(init=False, default_factory=dict)
     _input_node: str = field(init=False)
@@ -23,19 +21,33 @@ class OMComponent:
 
     def __post_init__(self):
         self._graph = OMGraph(self._component.graph(), self)
-        self._input_node = cmds.createNode(
-            self._maya_node_type,
-            name=self._component.name() + "_IN",
-        )
-
-        self._output_node = cmds.createNode(
-            self._maya_node_type,
-            name=self._component.name() + "_OUT",
-        )
 
         self._component.name_changed.subscribe(self.rename)
         self._component.port_registered.subscribe(self.register_port)
         self._component.port_unregistered.subscribe(self.unregister_port)
+
+        self.build()
+
+    def build(self):
+        """Create the maya graph for this component.
+
+        This range from simply mapping to a maya native node or create a full graph.
+        This method _must_ define `self._input_node` and `self._output_node`.
+        """
+        self._input_node = cmds.createNode(
+            "network",
+            name=self._component.name() + "_IN",
+        )
+
+        self._output_node = cmds.createNode(
+            "network",
+            name=self._component.name() + "_OUT",
+        )
+
+    @staticmethod
+    def maya_attribute_map() -> Dict[str, str]:
+        """Return a dictionary mapping the ports names and their maya attributes."""
+        return {}
 
     def uuid(self) -> UUID:
         """Return the UUID of the Component."""
@@ -44,6 +56,10 @@ class OMComponent:
     def component(self) -> Component:
         """Return the Orodruin Component."""
         return self._component
+
+    def ports(self) -> Dict[UUID, OMPort]:
+        """Return the Orodruin Component."""
+        return self._ports
 
     def graph(self) -> OMGraph:
         """Return the inner OMGraph."""
@@ -79,22 +95,25 @@ class OMComponent:
         else:
             node = self._output_node
 
-        om_port = OMPort(port)
+        maya_attribute = self.maya_attribute_map().get(port.name(), port.name())
 
-        kwargs = om_port.add_attr_kwargs()
-        cmds.addAttr(node, **kwargs)
+        om_port = OMPort(port, maya_attribute)
+
+        if not cmds.attributeQuery(maya_attribute, node=node, exists=True):
+            kwargs = om_port.add_attr_kwargs()
+            cmds.addAttr(node, **kwargs)
 
         self._ports[port.uuid()] = om_port
 
     def unregister_port(self, port: Port) -> None:
         """Register a port to the OMGraph."""
+        om_port = self._ports.pop(port.uuid())
+
         if port.direction() is PortDirection.input:
             node = self._input_node
         else:
             node = self._output_node
 
-        attribute = f"{node}.{port.name()}"
-
-        cmds.deleteAttr(attribute)
-
-        del self._ports[port.uuid()]
+        user_defined_attributes = cmds.listAttr(node, ud=True) or []
+        if om_port in user_defined_attributes:
+            cmds.deleteAttr(f"{node}.{port.name()}")

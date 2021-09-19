@@ -1,12 +1,14 @@
 from __future__ import annotations
 
+import importlib.util
 import logging
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Dict, Optional, Tuple
 from uuid import UUID
 
 from maya import cmds
-from orodruin.core import Component, Connection, Graph, Port
+from orodruin.core import Component, Connection, Graph
+from orodruin.core.library import LibraryManager
 from orodruin.core.port.port import PortDirection
 
 logger = logging.getLogger(__name__)
@@ -40,7 +42,27 @@ class OMGraph:
         # pylint: disable = import-outside-toplevel
         from orodruin_maya.component import OMComponent
 
-        om_component = OMComponent(component)
+        maya_component_class = OMComponent
+
+        if component.library():
+            python_component_path = LibraryManager.find_component(
+                component_name=component.type(),
+                library_name=component.library().name(),
+                target_name="maya",
+                extension="py",
+            )
+            if python_component_path:
+                spec = importlib.util.spec_from_file_location(
+                    python_component_path.stem, python_component_path
+                )
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)
+                _class = getattr(mod, python_component_path.stem)
+                if _class:
+                    maya_component_class = _class
+
+        om_component = maya_component_class(component)
+
         self._components[component.uuid()] = om_component
         logger.debug("Registered component %s", component.name())
 
@@ -71,7 +93,8 @@ class OMGraph:
             source_maya_node = source_om_component.input_node()
         else:
             source_maya_node = source_om_component.output_node()
-        source_attribute = f"{source_maya_node}.{source_port.name()}"
+        source_om_port = source_om_component.ports().get(source_port.uuid())
+        source_attribute = f"{source_maya_node}.{source_om_port.maya_attribute()}"
 
         target_port = connection.target()
         target_component = target_port.component()
@@ -91,7 +114,8 @@ class OMGraph:
             target_maya_node = target_om_component.input_node()
         else:
             target_maya_node = target_om_component.output_node()
-        target_attribute = f"{target_maya_node}.{target_port.name()}"
+        target_om_port = target_om_component.ports().get(target_port.uuid())
+        target_attribute = f"{target_maya_node}.{target_om_port.maya_attribute()}"
 
         cmds.connectAttr(source_attribute, target_attribute)
         self._connections[connection.uuid()] = (source_attribute, target_attribute)

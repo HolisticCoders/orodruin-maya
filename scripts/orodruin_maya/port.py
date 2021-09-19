@@ -1,9 +1,8 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
 from typing import Dict
 from uuid import UUID
 
-from maya import cmds
 from orodruin.core import Port
 
 
@@ -24,6 +23,7 @@ class OMPort:
     """Orodruin Maya Graph handling the events from the Orodruin Graph."""
 
     _port: Port
+    _maya_attribute: str
 
     def add_attr_kwargs(self) -> Dict[str, str]:
         """Return the kwargs needed to create the maya attribute for this Port"""
@@ -35,6 +35,10 @@ class OMPort:
     def port(self) -> Port:
         """Return the Orodruin Component."""
         return self._port
+
+    def maya_attribute(self) -> str:
+        """Return the maya attribute this port maps to."""
+        return self._maya_attribute
 
     def uuid(self) -> UUID:
         """Return the UUID of the Port."""
