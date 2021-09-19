@@ -1,2 +1,0 @@
-+ OrodruinMaya any ../
-scripts: scripts
