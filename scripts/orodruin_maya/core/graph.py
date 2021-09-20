@@ -14,7 +14,7 @@ from orodruin.core.port.port import PortDirection
 logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
-    from orodruin_maya.component import OMComponent
+    from .component import OMComponent
 
 
 @dataclass
@@ -40,7 +40,7 @@ class OMGraph:
     def register_component(self, component: Component) -> None:
         """Register a component to the OMGraph."""
         # pylint: disable = import-outside-toplevel
-        from orodruin_maya.component import OMComponent
+        from .component import OMComponent
 
         maya_component_class = OMComponent
 

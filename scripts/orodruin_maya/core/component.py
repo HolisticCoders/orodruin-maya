@@ -4,8 +4,9 @@ from uuid import UUID
 
 from maya import cmds
 from orodruin.core import Component, Port, PortDirection
-from orodruin_maya.graph import OMGraph
-from orodruin_maya.port import OMPort
+
+from .graph import OMGraph
+from .port import OMPort
 
 
 @dataclass
