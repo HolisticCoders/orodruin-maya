@@ -1,5 +1,3 @@
-import site
-from pathlib import Path
+from orodruin_maya_startup import init_module
 
-venv_path = Path(__file__).parent.parent / ".venv" / "Scripts" / "site-packages"
-site.addsitedir(venv_path)
+init_module()

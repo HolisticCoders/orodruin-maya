@@ -119,10 +119,10 @@ class OMGraph:
 
         cmds.connectAttr(source_attribute, target_attribute)
         self._connections[connection.uuid()] = (source_attribute, target_attribute)
-        logger.debug("Registered port %s", connection.uuid())
+        logger.debug("Registered connection %s", connection.uuid())
 
     def unregister_connection(self, connection: Connection) -> None:
         """Unregister a connection from the OMGraph."""
         source, target = self._connections.pop(connection.uuid())
         cmds.disconnectAttr(source, target)
-        logger.debug("Unregistered port %s", connection.uuid())
+        logger.debug("Unregistered connection %s", connection.uuid())
