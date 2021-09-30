@@ -1,6 +1,6 @@
-from orodruin.core import Graph
-from orodruin_editor.gui.editor_window import OrodruinEditorWindow
-from orodruin_maya.core import OMGraph
+from orodruin.core.state import State
+from orodruin_editor.ui.window import OrodruinWindow
+from orodruin_maya.core.state import OMState
 from PySide2.QtWidgets import QVBoxLayout
 
 from .dockable_widget import DockableWidget
@@ -16,10 +16,10 @@ class OrodruinMayaWindow(DockableWidget):
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
 
-        self.orodruin_editor = OrodruinEditorWindow()
-        self.layout.addWidget(self.orodruin_editor)
+        state = State()
 
-        self.root_graph = Graph()
-        self.om_graph = OMGraph(self.root_graph)
-        self.orodruin_editor.graphs[self.root_graph.uuid()] = self.root_graph
-        self.orodruin_editor.set_active_scene(self.root_graph.uuid())
+        om_state = OMState(state)
+
+        orodruin_editor = OrodruinWindow(state)
+
+        self.layout.addWidget(orodruin_editor)

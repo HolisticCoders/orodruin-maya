@@ -1,3 +1,3 @@
-from .core import OMComponent, OMGraph, OMPort
+from .core import OMNode, OMGraph, OMPort
 
-__all__ = ["OMGraph", "OMComponent", "OMPort"]
+__all__ = ["OMGraph", "OMNode", "OMPort"]
