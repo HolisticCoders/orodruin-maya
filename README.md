@@ -7,8 +7,8 @@ An [Orodruin](https://github.com/HolisticCoders/orodruin) implementation  for Au
     If you use pyenv, run `pyenv install 3.7.9` and poetry will pick up on the proper version automatically
 - [Orodruin](https://github.com/HolisticCoders/orodruin) must already be cloned.
 - The [Orodruin Editor](https://github.com/HolisticCoders/orodruin-editor) must be cloned as well, next to the orodruin repository.
-- The [Orodruin Component Library](https://github.com/HolisticCoders/orodruin-library) should also be cloned and registered (see repo readme)  
-    This is not strictly necessary but without that, you won't have any component to create
+- The [Orodruin Node Library](https://github.com/HolisticCoders/orodruin-library) should also be cloned and registered (see repo readme)  
+    This is not strictly necessary but without that, you won't have any node to create
 
 # Installation
 - Clone this repository next to orodruin's repository (this is imperative, poetry uses a relative path to orodruin's folder to use it as a dependency.)
