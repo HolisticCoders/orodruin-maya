@@ -23,3 +23,6 @@ class OrodruinMayaWindow(DockableWidget):
         orodruin_editor = OrodruinWindow(state)
 
         self.layout.addWidget(orodruin_editor)
+
+    def keyPressEvent(self, *args, **kwargs) -> None:
+        """Don't pass any keyboard event to maya."""
