@@ -48,7 +48,7 @@ class OMNode:
         return self._name
 
     def set_name(self, name: str) -> None:
-        cmds.rename(self._input_node, name)
+        self._input_node = cmds.rename(self._input_node, name)
         self._name = name
 
     def input_node(self) -> str:
@@ -98,8 +98,8 @@ class OMGroupNode(OMNode):
         self._output_node = cmds.createNode("network", name=self._name + "_OUT")
 
     def set_name(self, name: str) -> None:
-        cmds.rename(self._input_node, name + "_IN")
-        cmds.rename(self._output_node, name + "_OUT")
+        self._input_node = cmds.rename(self._input_node, name + "_IN")
+        self._output_node = cmds.rename(self._output_node, name + "_OUT")
 
     def delete(self):
         cmds.delete(self._input_node)
