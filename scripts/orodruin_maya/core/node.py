@@ -70,11 +70,14 @@ class OMNode:
 
         om_port = self._om_state.get_om_port(port)
 
-        maya_attribute = self.maya_attribute_map().get(port.name(), port.name())
+        attribute_needs_created = port.name() not in self.maya_attribute_map()
+        if attribute_needs_created:
+            maya_attribute = self.maya_attribute_map().get(port.name(), port.name())
 
-        if not cmds.attributeQuery(maya_attribute, node=node, exists=True):
-            kwargs = om_port.add_attr_kwargs(self.maya_attribute_map())
-            cmds.addAttr(node, **kwargs)
+            if not cmds.attributeQuery(maya_attribute, node=node, exists=True):
+                kwargs = om_port.add_attr_kwargs(self.maya_attribute_map())
+
+                cmds.addAttr(node, **kwargs)
 
         self._om_ports.append(om_port)
 
