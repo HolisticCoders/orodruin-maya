@@ -76,14 +76,22 @@ class OMPort:
         if self._parent_id:
             return self._om_state.get_om_port(self._parent_id)
 
-    def add_attr_kwargs(self) -> Dict[str, str]:
+    def add_attr_kwargs(
+        self, attribute_map: Optional[Dict[str, str]] = None
+    ) -> Dict[str, str]:
         """Return the kwargs needed to create the maya attribute for this Port"""
         kwargs = PortKwargs[self._type.__name__].value
         kwargs["longName"] = self._name
 
         parent_port = self.parent()
         if parent_port:
-            kwargs["parent"] = parent_port.name()
+
+            attribute_map = attribute_map or {}
+            maya_parent_attribute = attribute_map.get(
+                parent_port.name(), parent_port.name()
+            )
+
+            kwargs["parent"] = maya_parent_attribute
 
         return kwargs
 
