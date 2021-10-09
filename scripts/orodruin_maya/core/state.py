@@ -144,7 +144,6 @@ class OMState:
                 target_name="maya",
                 extension="py",
             )
-            # print(python_node_path)
             if python_node_path:
                 spec = spec_from_file_location(python_node_path.stem, python_node_path)
                 mod = module_from_spec(spec)
