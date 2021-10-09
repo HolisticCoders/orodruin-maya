@@ -49,6 +49,7 @@ class OMNode:
 
     def set_name(self, name: str) -> None:
         self._input_node = cmds.rename(self._input_node, name)
+        self._output_node = self._input_node
         self._name = name
 
     def input_node(self) -> str:
