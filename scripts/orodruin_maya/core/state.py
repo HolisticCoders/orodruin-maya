@@ -3,11 +3,13 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass, field
 from importlib.util import module_from_spec, spec_from_file_location
-from typing import Dict
+from typing import Dict, List
 from uuid import UUID
 
+from maya import cmds
 from orodruin.core import Connection, Graph, Node, Port, State
 from orodruin.core.library import LibraryManager
+from orodruin_editor import GraphicsState
 
 from .connection import OMConnection, OMConnectionLike
 from .graph import OMGraph, OMGraphLike
@@ -22,6 +24,7 @@ class OMState:
     """Orodruin Maya State class handling the events from the Orodruin State"""
 
     _state: State
+    _editor_state: GraphicsState
 
     _om_graphs: Dict[UUID, OMGraph] = field(init=False, default_factory=dict)
     _om_nodes: Dict[UUID, OMNode] = field(init=False, default_factory=dict)
@@ -37,6 +40,7 @@ class OMState:
         self._state.port_deleted.subscribe(self.delete_om_port)
         self._state.connection_created.subscribe(self.create_om_connection)
         self._state.connection_deleted.subscribe(self.delete_om_connection)
+        self._editor_state.selection_changed.subscribe(self.select_nodes)
 
     def state(self) -> State:
         return self._state
@@ -181,3 +185,7 @@ class OMState:
         om_connection = self._om_connections.pop(uuid)
         om_connection.delete()
         logger.debug("Deleted OM connection %s.", uuid)
+
+    def select_nodes(self, uuids: List[UUID]) -> None:
+        nodes = [self.get_om_node(uuid).input_node() for uuid in uuids]
+        cmds.select(nodes)

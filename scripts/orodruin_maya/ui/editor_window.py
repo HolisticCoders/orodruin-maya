@@ -18,9 +18,9 @@ class OrodruinMayaWindow(DockableWidget):
 
         state = State()
 
-        om_state = OMState(state)
-
         orodruin_editor = OrodruinWindow(state)
+
+        om_state = OMState(state, orodruin_editor.graphics_state())
 
         self.layout.addWidget(orodruin_editor)
 
