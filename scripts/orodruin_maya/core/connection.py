@@ -57,7 +57,7 @@ class OMConnection:
         """Return the maya attribute name from an OMPort"""
         om_port = self._om_state.get_om_port(om_port)
 
-        port = self._om_state.state().port_from_portlike(om_port.uuid())
+        port = self._om_state.state().get_port(om_port.uuid())
         node = port.node()
         om_node = self._om_state.get_om_node(node)
         maya_node = (
