@@ -69,6 +69,14 @@ colorama = {version = "*", markers = "platform_system == \"Windows\""}
 importlib-metadata = {version = "*", markers = "python_version < \"3.8\""}
 
 [[package]]
+name = "cmdx"
+version = "0.6.0"
+description = "A fast subset of maya.cmds"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "colorama"
 version = "0.4.4"
 description = "Cross-platform colored terminal text."
@@ -275,7 +283,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7,<3.10"
-content-hash = "00b26d1b7b9c072f0f9c3f3a0d9db9e709206176df7bb6dbce1e460e8d51107a"
+content-hash = "27df92ded4f5f3a595dae3467b5cbca44b10c12646d344618449c6181018d20c"
 
 [metadata.files]
 appdirs = [
@@ -296,6 +304,10 @@ black = [
 click = [
     {file = "click-8.0.3-py3-none-any.whl", hash = "sha256:353f466495adaeb40b6b5f592f9f91cb22372351c84caeb068132442a4518ef3"},
     {file = "click-8.0.3.tar.gz", hash = "sha256:410e932b050f5eed773c4cda94de75971c89cdb3155a72a0831139a79e5ecb5b"},
+]
+cmdx = [
+    {file = "cmdx-0.6.0-py2.py3-none-any.whl", hash = "sha256:49eb26a6fe2c28d2d8155df6c51f39ddfe746dca8478e6417a97403c6bed6399"},
+    {file = "cmdx-0.6.0.tar.gz", hash = "sha256:ab8742a99d9fe1a15301f4b46e68a626c2822139d8762a1d084eac78328effc8"},
 ]
 colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},

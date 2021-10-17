@@ -9,6 +9,7 @@ license = "MIT"
 python = ">=3.7,<3.10"
 orodruin = {path = "../orodruin", develop = true}
 orodruin-editor = {path = "../orodruin-editor", develop = true}
+cmdx = "^0.6.0"
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"

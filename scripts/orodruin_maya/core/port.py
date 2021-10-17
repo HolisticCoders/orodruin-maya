@@ -75,6 +75,7 @@ class OMPort:
     def parent(self) -> Optional[OMPort]:
         if self._parent_id:
             return self._om_state.get_om_port(self._parent_id)
+        return None
 
     def add_attr_kwargs(
         self, attribute_map: Optional[Dict[str, str]] = None
