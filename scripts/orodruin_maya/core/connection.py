@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 from typing import TYPE_CHECKING, Union
 from uuid import UUID
 
+import attr
 from maya import cmds
 from orodruin.core.connection import Connection, ConnectionLike
 from orodruin.core.port.port import PortDirection
@@ -13,15 +13,15 @@ if TYPE_CHECKING:
     from .state import OMState
 
 
-@dataclass
+@attr.s()
 class OMConnection:
     """Orodruin Maya Connection handling the events from the Orodruin Connection."""
 
-    _om_state: OMState
-    _uuid: UUID
+    _om_state: OMState = attr.ib()
+    _uuid: UUID = attr.ib()
 
-    _source_id: UUID
-    _target_id: UUID
+    _source_id: UUID = attr.ib()
+    _target_id: UUID = attr.ib()
 
     @classmethod
     def from_connection(cls, om_state: OMState, connection: Connection) -> OMConnection:
@@ -70,7 +70,7 @@ class OMConnection:
             port.name(),
         )
 
-        return f"{maya_node}.{maya_attr}"
+        return f"{maya_node.name()}.{maya_attr}"
 
 
 OMConnectionLike = Union[OMConnection, ConnectionLike]

@@ -1,18 +1,18 @@
 from __future__ import annotations
 
-from dataclasses import InitVar, dataclass, field
 from typing import Optional
 
+import attr
 from maya import OpenMayaUI, cmds
 from PySide2 import QtCore, QtWidgets
 from shiboken2 import getCppPointer
 
 
-@dataclass
+@attr.s
 class WorkspaceControl:
-    name: str
+    name: str = attr.ib()
 
-    widget: Optional[QtWidgets.QWidget] = field(init=False, default=None)
+    widget: Optional[QtWidgets.QWidget] = attr.ib(init=False, default=None)
 
     def exists(self) -> bool:
         return cmds.workspaceControl(self.name, q=True, exists=True)

@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass
 from enum import Enum
 from typing import TYPE_CHECKING, Dict, Optional, Union
 from uuid import UUID
 
+import attr
 from orodruin.core import Port
 from orodruin.core.port.port import PortDirection, PortLike, PortType
 
@@ -28,16 +28,16 @@ class PortKwargs(Enum):
     str = {"dataType": "string"}
 
 
-@dataclass
+@attr.s
 class OMPort:
     """Orodruin Maya Port handling the events from the Orodruin Port."""
 
-    _om_state: OMState
-    _uuid: UUID
-    _name: str
-    _type: PortType
-    _direction: PortDirection
-    _parent_id: Optional[UUID]
+    _om_state: OMState = attr.ib()
+    _uuid: UUID = attr.ib()
+    _name: str = attr.ib()
+    _type: PortType = attr.ib()
+    _direction: PortDirection = attr.ib()
+    _parent_id: Optional[UUID] = attr.ib(default=None)
 
     @classmethod
     def from_port(cls, om_state: OMState, port: Port) -> OMPort:
