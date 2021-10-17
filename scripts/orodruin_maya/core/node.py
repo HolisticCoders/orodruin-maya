@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Dict, List, Union
 from uuid import UUID
 
+import attr
 from maya import cmds
 from orodruin.core.node import Node, NodeLike
 from orodruin.core.port.port import Port, PortDirection
@@ -15,18 +15,18 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-@dataclass
+@attr.s
 class OMNode:
     """Orodruin Maya Node handling the events from the Orodruin Node."""
 
-    _om_state: OMState
-    _uuid: UUID
-    _name: str
+    _om_state: OMState = attr.ib()
+    _uuid: UUID = attr.ib()
+    _name: str = attr.ib()
 
-    _input_node: str = field(init=False)
-    _output_node: str = field(init=False)
+    _input_node: str = attr.ib(init=False)
+    _output_node: str = attr.ib(init=False)
 
-    _om_ports: List[UUID] = field(init=False, default_factory=list)
+    _om_ports: List[UUID] = attr.ib(init=False, factory=list)
 
     @classmethod
     def from_node(cls, om_state: OMState, node: Node) -> OMNode:
@@ -35,7 +35,7 @@ class OMNode:
         node.name_changed.subscribe(om_node.set_name)
         return om_node
 
-    def __post_init__(self) -> None:
+    def __attrs_post_init__(self) -> None:
         self.build()
 
     def om_state(self) -> OMState:

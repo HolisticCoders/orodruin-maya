@@ -6,7 +6,7 @@ authors = ["Loïc Pinsard <muream@gmail.com>", "Aphosis <aphosis.github@gmail.co
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = ">=3.7,<3.10"
 orodruin = {path = "../orodruin", develop = true}
 orodruin-editor = {path = "../orodruin-editor", develop = true}
 

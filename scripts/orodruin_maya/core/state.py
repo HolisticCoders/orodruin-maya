@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass, field
 from importlib.util import module_from_spec, spec_from_file_location
 from typing import Dict, List
 from uuid import UUID
 
+import attr
 from maya import cmds
 from orodruin.core import Connection, Graph, Node, Port, State
 from orodruin.core.library import LibraryManager
@@ -19,19 +19,19 @@ from .port import OMPort, OMPortLike
 logger = logging.getLogger(__name__)
 
 
-@dataclass
+@attr.s
 class OMState:
     """Orodruin Maya State class handling the events from the Orodruin State"""
 
-    _state: State
-    _editor_state: GraphicsState
+    _state: State = attr.ib()
+    _editor_state: GraphicsState = attr.ib()
 
-    _om_graphs: Dict[UUID, OMGraph] = field(init=False, default_factory=dict)
-    _om_nodes: Dict[UUID, OMNode] = field(init=False, default_factory=dict)
-    _om_ports: Dict[UUID, OMPort] = field(init=False, default_factory=dict)
-    _om_connections: Dict[UUID, OMConnection] = field(init=False, default_factory=dict)
+    _om_graphs: Dict[UUID, OMGraph] = attr.ib(init=False, factory=dict)
+    _om_nodes: Dict[UUID, OMNode] = attr.ib(init=False, factory=dict)
+    _om_ports: Dict[UUID, OMPort] = attr.ib(init=False, factory=dict)
+    _om_connections: Dict[UUID, OMConnection] = attr.ib(init=False, factory=dict)
 
-    def __post_init__(self) -> None:
+    def __attrs_post_init__(self) -> None:
         self._state.graph_created.subscribe(self.create_om_graph)
         self._state.graph_deleted.subscribe(self.delete_om_graph)
         self._state.node_created.subscribe(self.create_om_node)
