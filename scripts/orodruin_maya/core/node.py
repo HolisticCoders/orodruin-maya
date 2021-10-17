@@ -5,9 +5,11 @@ from typing import TYPE_CHECKING, Dict, List, Union
 from uuid import UUID
 
 import attr
+import maya.api.OpenMaya as om2
 from maya import cmds
 from orodruin.core.node import Node, NodeLike
 from orodruin.core.port.port import Port, PortDirection
+from orodruin_maya.utils import create_node
 
 if TYPE_CHECKING:
     from .state import OMState
@@ -23,8 +25,9 @@ class OMNode:
     _uuid: UUID = attr.ib()
     _name: str = attr.ib()
 
-    _input_node: str = attr.ib(init=False)
-    _output_node: str = attr.ib(init=False)
+    _input_node: om2.MFnDependencyNode = attr.ib(init=False)
+    _output_node: om2.MFnDependencyNode = attr.ib(init=False)
+    _nodes: List[om2.MFnDependencyNode] = attr.ib(init=False, factory=list)
 
     _om_ports: List[UUID] = attr.ib(init=False, factory=list)
 
@@ -48,15 +51,14 @@ class OMNode:
         return self._name
 
     def set_name(self, name: str) -> None:
-        self._input_node = cmds.rename(self._input_node, name)
-        self._output_node = self._input_node
+        cmds.rename(self._input_node.name(), name)
         self._name = name
 
-    def input_node(self) -> str:
+    def input_node(self) -> om2.MFnDependencyNode:
         """This Component's input maya node"""
         return self._input_node
 
-    def output_node(self) -> str:
+    def output_node(self) -> om2.MFnDependencyNode:
         """This Component's output maya node"""
         return self._output_node
 
@@ -64,9 +66,9 @@ class OMNode:
         """Unregister a port from the OMGraph."""
 
         if port.direction() is PortDirection.input:
-            node = self._input_node
+            node = self._input_node.name()
         else:
-            node = self._output_node
+            node = self._output_node.name()
 
         om_port = self._om_state.get_om_port(port)
 
@@ -87,27 +89,28 @@ class OMNode:
         return {}
 
     def build(self):
-        self._input_node = cmds.createNode("network", name=self._name)
+        self._input_node = create_node("network", name=self._name)
         self._output_node = self._input_node
+        self._nodes.append(self._input_node)
 
     def delete(self):
-        cmds.delete(self._input_node)
+        for node in self._nodes:
+            if cmds.objExists(node.name()):
+                cmds.delete(node.name())
 
 
 class OMGroupNode(OMNode):
     """Class for all Group Nodes."""
 
     def build(self):
-        self._input_node = cmds.createNode("network", name=self._name + "_IN")
-        self._output_node = cmds.createNode("network", name=self._name + "_OUT")
+        self._input_node = create_node("network", name=self._name + "_IN")
+        self._output_node = create_node("network", name=self._name + "_OUT")
+        self._nodes.append(self._input_node)
+        self._nodes.append(self._output_node)
 
     def set_name(self, name: str) -> None:
-        self._input_node = cmds.rename(self._input_node, name + "_IN")
-        self._output_node = cmds.rename(self._output_node, name + "_OUT")
-
-    def delete(self):
-        cmds.delete(self._input_node)
-        cmds.delete(self._output_node)
+        cmds.rename(self._input_node.name(), name + "_IN")
+        cmds.rename(self._output_node.name(), name + "_OUT")
 
 
 OMNodeLike = Union[OMNode, NodeLike]

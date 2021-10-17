@@ -187,5 +187,5 @@ class OMState:
         logger.debug("Deleted OM connection %s.", uuid)
 
     def select_nodes(self, uuids: List[UUID]) -> None:
-        nodes = [self.get_om_node(uuid).input_node() for uuid in uuids]
+        nodes = [self.get_om_node(uuid).input_node().name() for uuid in uuids]
         cmds.select(nodes)

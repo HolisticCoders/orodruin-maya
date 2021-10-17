@@ -70,7 +70,7 @@ class OMConnection:
             port.name(),
         )
 
-        return f"{maya_node}.{maya_attr}"
+        return f"{maya_node.name()}.{maya_attr}"
 
 
 OMConnectionLike = Union[OMConnection, ConnectionLike]
