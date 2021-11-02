@@ -15,6 +15,7 @@ from .connection import OMConnection, OMConnectionLike
 from .graph import OMGraph, OMGraphLike
 from .node import OMGroupNode, OMNode, OMNodeLike
 from .port import OMPort, OMPortLike
+from .serializer import MayaSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +42,8 @@ class OMState:
         self._state.connection_created.subscribe(self.create_om_connection)
         self._state.connection_deleted.subscribe(self.delete_om_connection)
         self._editor_state.selection_changed.subscribe(self.select_nodes)
+
+        self._state.register_serializer(MayaSerializer(self))
 
     def state(self) -> State:
         return self._state

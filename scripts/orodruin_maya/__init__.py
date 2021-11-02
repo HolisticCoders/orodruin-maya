@@ -1,4 +1,4 @@
-from .core import OMGraph, OMGroupNode, OMNode, OMPort
+from .core import OMGraph, OMGroupNode, OMNode, OMPort, OMState
 from .utils import reload_orodruin
 
 __all__ = [
@@ -6,5 +6,6 @@ __all__ = [
     "OMGroupNode",
     "OMNode",
     "OMPort",
+    "OMState",
     "reload_orodruin",
 ]

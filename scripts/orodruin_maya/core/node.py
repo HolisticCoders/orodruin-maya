@@ -64,23 +64,7 @@ class OMNode:
 
     def register_port(self, port: Port) -> None:
         """Unregister a port from the OMGraph."""
-
-        if port.direction() is PortDirection.input:
-            maya_node = self._input_node
-        else:
-            maya_node = self._output_node
-
         om_port = self._om_state.get_om_port(port)
-
-        attribute_needs_created = port.name() not in self.maya_attribute_map()
-        if attribute_needs_created:
-            maya_attribute = self.maya_attribute_map().get(port.name(), port.name())
-
-            if not maya_node.has_attr(maya_attribute):
-                kwargs = om_port.add_attr_kwargs(self.maya_attribute_map())
-
-                cmds.addAttr(maya_node.name(), **kwargs)
-
         self._om_ports.append(om_port.uuid())
 
     @staticmethod
