@@ -7,8 +7,9 @@ from uuid import UUID
 import attr
 import cmdx
 from maya import cmds
+from orodruin.core.connection import Connection
 from orodruin.core.node import Node, NodeLike
-from orodruin.core.port.port import Port, PortDirection
+from orodruin.core.port.port import Port
 
 if TYPE_CHECKING:
     from .state import OMState
@@ -93,6 +94,12 @@ class OMNode:
         node = cmdx.create_node(node_type, name, parent)
         self._nodes.append(node)
         return node
+
+    def on_connection_received(self, connection: Connection) -> None:
+        """Called whenever a port of this node receives a connection."""
+
+    def on_connection_removed(self, connection: Connection) -> None:
+        """Called whenever a port of this node gets disconnected."""
 
 
 class OMGroupNode(OMNode):

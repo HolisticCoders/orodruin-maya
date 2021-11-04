@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import logging
-from importlib.util import module_from_spec, spec_from_file_location
+from importlib.util import module_from_spec, source_from_cache, spec_from_file_location
 from typing import Dict, List
 from uuid import UUID
 
@@ -137,9 +137,9 @@ class OMState:
         self._om_graphs[graph.uuid()] = om_graph
         logger.debug("Created OM graph %s.", graph.uuid())
 
-    def delete_om_graph(self, uuid: UUID) -> None:
-        del self._om_graphs[uuid]
-        logger.debug("Deleted OM graph %s.", uuid)
+    def delete_om_graph(self, graph: Graph) -> None:
+        del self._om_graphs[graph.uuid()]
+        logger.debug("Deleted OM graph %s.", graph.uuid())
 
     def create_om_node(self, node: Node) -> None:
 
@@ -164,30 +164,44 @@ class OMState:
         self._om_nodes[node.uuid()] = om_node
         logger.debug("Created OM node %s.", node.path())
 
-    def delete_om_node(self, uuid: UUID) -> None:
-        om_node = self._om_nodes.pop(uuid)
+    def delete_om_node(self, node: Node) -> None:
+        om_node = self._om_nodes.pop(node.uuid())
         om_node.delete()
-        logger.debug("Deleted OM node %s.", uuid)
+        logger.debug("Deleted OM node %s.", node.uuid())
 
     def create_om_port(self, port: Port) -> None:
         om_port = OMPort.from_port(self, port)
         self._om_ports[port.uuid()] = om_port
         logger.debug("Created OM port %s.", port.path())
 
-    def delete_om_port(self, uuid: UUID) -> None:
-        del self._om_ports[uuid]
-        logger.debug("Deleted OM port %s.", uuid)
+    def delete_om_port(self, port: Port) -> None:
+        del self._om_ports[port.uuid()]
+        logger.debug("Deleted OM port %s.", port.uuid())
 
     def create_om_connection(self, connection: Connection) -> None:
         om_connection = OMConnection.from_connection(self, connection)
         om_connection.build()
         self._om_connections[connection.uuid()] = om_connection
+
+        source_node = om_connection.source().om_node()
+        target_node = om_connection.target().om_node()
+        source_node.on_connection_received(connection)
+        target_node.on_connection_received(connection)
+
         logger.debug("Created OM connection %s.", connection.uuid())
 
-    def delete_om_connection(self, uuid: UUID) -> None:
-        om_connection = self._om_connections.pop(uuid)
+    def delete_om_connection(self, connection: Connection) -> None:
+
+        om_connection = self._om_connections.pop(connection.uuid())
+
+        source_node = om_connection.source().om_node()
+        target_node = om_connection.target().om_node()
+        source_node.on_connection_removed(connection)
+        target_node.on_connection_removed(connection)
+
         om_connection.delete()
-        logger.debug("Deleted OM connection %s.", uuid)
+
+        logger.debug("Deleted OM connection %s.", connection.uuid())
 
     def select_nodes(self, uuids: List[UUID]) -> None:
         nodes = [self.get_om_node(uuid).input_node().path() for uuid in uuids]

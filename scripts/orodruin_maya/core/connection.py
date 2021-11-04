@@ -9,7 +9,8 @@ from orodruin.core.connection import Connection, ConnectionLike
 from orodruin.core.port.port import PortDirection
 
 if TYPE_CHECKING:
-    from .port import OMPortLike
+
+    from .port import OMPort, OMPortLike
     from .state import OMState
 
 
@@ -39,6 +40,12 @@ class OMConnection:
     def uuid(self) -> UUID:
         """Return the UUID of the connection"""
         return self._uuid
+
+    def source(self) -> OMPort:
+        return self._om_state.get_om_port(self._source_id)
+
+    def target(self) -> OMPort:
+        return self._om_state.get_om_port(self._target_id)
 
     def build(self) -> None:
         """Create the maya connection"""
