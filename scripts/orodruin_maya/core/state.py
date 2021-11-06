@@ -183,24 +183,11 @@ class OMState:
         om_connection.build()
         self._om_connections[connection.uuid()] = om_connection
 
-        source_node = om_connection.source().om_node()
-        target_node = om_connection.target().om_node()
-        source_node.on_connection_received(connection)
-        target_node.on_connection_received(connection)
-
         logger.debug("Created OM connection %s.", connection.uuid())
 
     def delete_om_connection(self, connection: Connection) -> None:
-
         om_connection = self._om_connections.pop(connection.uuid())
-
-        source_node = om_connection.source().om_node()
-        target_node = om_connection.target().om_node()
-        source_node.on_connection_removed(connection)
-        target_node.on_connection_removed(connection)
-
         om_connection.delete()
-
         logger.debug("Deleted OM connection %s.", connection.uuid())
 
     def select_nodes(self, uuids: List[UUID]) -> None:

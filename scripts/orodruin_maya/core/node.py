@@ -65,6 +65,8 @@ class OMNode:
 
     def register_port(self, port: Port) -> None:
         """Unregister a port from the OMGraph."""
+        port.upstream_connection_created.subscribe(self.on_connection_received)
+        port.upstream_connection_deleted.subscribe(self.on_connection_removed)
         om_port = self._om_state.get_om_port(port)
         self._om_ports.append(om_port.uuid())
 
@@ -95,10 +97,10 @@ class OMNode:
         self._nodes.append(node)
         return node
 
-    def on_connection_received(self, connection: Connection) -> None:
+    def on_connection_received(self, port: Port) -> None:
         """Called whenever a port of this node receives a connection."""
 
-    def on_connection_removed(self, connection: Connection) -> None:
+    def on_connection_removed(self, port: Port) -> None:
         """Called whenever a port of this node gets disconnected."""
 
 
