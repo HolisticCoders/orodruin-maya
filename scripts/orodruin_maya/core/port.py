@@ -25,6 +25,7 @@ ATTRIBUTE_RE = re.compile(r"(?P<attribute>\w+)(?:\[(?P<index>\d+)\])?")
 class PortKwargs(Enum):
     """A Mapping between the port type and maya addAttr kwargs."""
 
+    Reference = {"attributeType": cmdx.String}
     Matrix4 = {"attributeType": cmdx.Matrix}
     Vector2 = {"attributeType": cmdx.Double2}
     Vector3 = {"attributeType": cmdx.Double3}
@@ -46,6 +47,7 @@ class OMPort:
     _name: str = attr.ib()
     _type: PortType = attr.ib()
     _direction: PortDirection = attr.ib()
+    _node_id: UUID = attr.ib()
     _parent_id: Optional[UUID] = attr.ib(default=None)
 
     @classmethod
@@ -64,6 +66,7 @@ class OMPort:
             port.name(),
             port.type(),
             port.direction(),
+            port.node().uuid(),
             parent_port_id,
         )
 
@@ -141,7 +144,6 @@ class OMPort:
             )
             and maya_attribute.writable
         ):
-
             maya_attribute.write(value)
 
     def add_attr_kwargs(

@@ -7,8 +7,9 @@ from uuid import UUID
 import attr
 import cmdx
 from maya import cmds
+from orodruin.core.connection import Connection
 from orodruin.core.node import Node, NodeLike
-from orodruin.core.port.port import Port, PortDirection
+from orodruin.core.port.port import Port
 
 if TYPE_CHECKING:
     from .state import OMState
@@ -64,6 +65,8 @@ class OMNode:
 
     def register_port(self, port: Port) -> None:
         """Unregister a port from the OMGraph."""
+        port.upstream_connection_created.subscribe(self.on_connection_received)
+        port.upstream_connection_deleted.subscribe(self.on_connection_removed)
         om_port = self._om_state.get_om_port(port)
         self._om_ports.append(om_port.uuid())
 
@@ -93,6 +96,12 @@ class OMNode:
         node = cmdx.create_node(node_type, name, parent)
         self._nodes.append(node)
         return node
+
+    def on_connection_received(self, port: Port) -> None:
+        """Called whenever a port of this node receives a connection."""
+
+    def on_connection_removed(self, port: Port) -> None:
+        """Called whenever a port of this node gets disconnected."""
 
 
 class OMGroupNode(OMNode):
