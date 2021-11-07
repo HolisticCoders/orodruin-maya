@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING, Any, Dict
 
 import attr
 from orodruin.core import SerializationType, Serializer
-from orodruin.core.serialization import serializer
 
 if TYPE_CHECKING:
     from orodruin.core import Connection, Graph, Node, Port
@@ -33,7 +32,9 @@ class MayaSerializer(Serializer):
             value = om_port.maya_attribute().read()
             data = {"value": value}
         else:
-            data = {}
+            om_port = self._om_state.get_om_port(port)
+            value = om_port.maya_attribute().read()
+            data = {"default_value": value}
 
         return data
 
