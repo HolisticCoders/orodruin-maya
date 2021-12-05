@@ -14,6 +14,7 @@ class OrodruinMayaWindow(DockableWidget):
         self.resize(1280, 720)
 
         self.layout = QVBoxLayout()
+        self.layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.layout)
 
         state = State()
