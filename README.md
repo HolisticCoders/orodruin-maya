@@ -13,15 +13,13 @@ An [Orodruin](https://github.com/HolisticCoders/orodruin) implementation  for Au
 # Installation
 - Clone this repository next to orodruin's repository (this is imperative, poetry uses a relative path to orodruin's folder to use it as a dependency.)
 - cd in `orodruin-maya`
-- Run poetry config virtualenvs.in-project true --local to make sure poetry will create the virtualenv inside the project folder.  
-    Note: Skip the --local argument if you want that behavior in every project.
 - Run poetry install --no-dev to create a new virtual env and install all the dependencies.  
     Remove the --no-dev argument if you want the dev dependencies.
 - Register the Maya module. This can be done in one of two ways:
     1. Add `/path/to/orodruin-maya/modules` to the environment variable `MAYA_MODULE_PATH`
     2. Move the file `/path/to/orodruin-maya/modules/OrodruinMaya.mod` to `C:/Users/<username>/Documents/maya/modules` (on Windows) and edit its content like so:
         ```
-        + OrodruinMaya any /path/to/orodruin-maya/
+        + MAYAVERSION:2022 OrodruinMaya any /path/to/orodruin-maya/
         scripts: scripts
         ```
 - Open the orodruin editor with the following snippet:  
