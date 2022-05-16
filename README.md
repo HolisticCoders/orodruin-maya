@@ -16,7 +16,7 @@ An [Orodruin](https://github.com/HolisticCoders/orodruin) implementation  for Au
 - Run poetry install --no-dev to create a new virtual env and install all the dependencies.  
     Remove the --no-dev argument if you want the dev dependencies.
 - Register the Maya module. This can be done in one of two ways:
-    1. Add `/path/to/orodruin-maya/modules` to the environment variable `MAYA_MODULE_PATH`
+    1. Add `/path/to/orodruin-maya/modules` to the environment variable `MAYA_MODULE_PATH` (at a system level or in your Maya.env)
     2. Move the file `/path/to/orodruin-maya/modules/OrodruinMaya.mod` to `C:/Users/<username>/Documents/maya/modules` (on Windows) and edit its content like so:
         ```
         + MAYAVERSION:2022 OrodruinMaya any /path/to/orodruin-maya/
